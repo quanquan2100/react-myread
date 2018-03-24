@@ -3,17 +3,23 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 
 export default class Search extends React.Component {
-	static propTypes = {
-		name: PropTypes.string,
-	};
+  static propTypes = {
+    query: PropTypes.string,
+    updateQuery: PropTypes.func
+  };
 
-	constructor(props) {
-		super(props);
-	}
+  handleChange(e) {
+    this.props.updateQuery(e.target.value);
+  }
 
-	render() {
-		return (
-			<div className="search-books-bar">
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  render() {
+    return (
+      <div className="search-books-bar">
         <Link className="close-search" to="/" >Close</Link>
         <div className="search-books-input-wrapper">
           {/*
@@ -24,9 +30,9 @@ export default class Search extends React.Component {
             However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
             you don't find a specific author or title. Every search is limited by search terms.
           */}
-          <input type="text" placeholder="Search by title or author"/>
+          <input type="text" placeholder="Search by title or author" value={this.props.query} onChange={this.handleChange} />
         </div>
       </div>
-		);
-	}
+    );
+  }
 }

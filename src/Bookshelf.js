@@ -20,7 +20,7 @@ export default class Bookshelf extends React.Component {
           <ol className="books-grid">
             {this.props.books.map((book, index) => (
               <li key={index}>
-                <Book img={book.img} title={book.title} authors={book.authors} />
+                <Book info={book} />
               </li>
             ))}
           </ol>
