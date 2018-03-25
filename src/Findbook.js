@@ -19,6 +19,11 @@ export default class Findbook extends React.Component {
   constructor() {
     super();
     this.updateQuery = this.updateQuery.bind(this);
+    this.updateBook = this.updateBook.bind(this);
+  }
+
+  updateBook() {
+    console.log("updateBook", arguments);
   }
 
   componentDidMount() {
@@ -60,7 +65,7 @@ export default class Findbook extends React.Component {
         <Search updateQuery={this.updateQuery} query={this.state.query} />
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.findResult.map((book, index) => (<li key={book.id}><Book info={book}/></li>))}
+            {this.state.findResult.map((book, index) => (<li key={book.id}><Book info={book} updateType={this.updateBook} /></li>))}
           </ol>
         </div>
       </div>
