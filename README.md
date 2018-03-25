@@ -1,3 +1,16 @@
+# MyReads 项目
+## 如何安装
+1. 下载项目
+1. 打开 terminal 进入对应项目文件夹
+1. 执行 `npm install`
+
+## 如何启动
+* 打开 terminal 进入对应项目文件夹
+* 执行 `npm start`
+* 或者使用 chrome 打开 `http://localhost:3000/`
+
+-----
+# old
 # MyReads Project
 
 This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
