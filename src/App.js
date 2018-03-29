@@ -1,45 +1,61 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 // import PropTypes from 'prop-types';
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css';
-// import Bookshelf from './Bookshelf';
 import Findbook from './Findbook';
-import myShelf from './myShelf';
+import MyShelf from './MyShelf';
 
 class BooksApp extends React.Component {
-  state = {
-    currentlyReading: [],
-    wantToRead: [],
-    read: []
+
+  constructor(props) {
+    super(props);
+    this.getBooks = this.getBooks.bind(this);
   }
 
-  // componentDidMount() {
-  //   // 在此处获取数据
-  //   BooksAPI.getAll().then(result => {
-  //     console.log(result)
-  //     if (result.error) {
-  //       console.log(result.error);
-  //     } else {
-  //       console.log({
-  //         currentlyReading: result.filter(book => book.shelf === "currentlyReading"),
-  //         read: result.filter(book => book.shelf === "read"),
-  //         wantToRead: result.filter(book => book.shelf === "wantToRead"),
-  //       })
-  //       this.setState({
-  //         currentlyReading: result.filter(book => book.shelf === "currentlyReading"),
-  //         read: result.filter(book => book.shelf === "read"),
-  //         wantToRead: result.filter(book => book.shelf === "wantToRead"),
-  //       });
-  //     }
-  //   });
-  // }
+  state = {
+    books: []
+  }
+
+  componentDidMount() {
+    // 在此处获取数据
+    this.getBooks();
+  }
+
+  getBooks() {
+    BooksAPI.getAll().then(result => {
+      if (result.error) {
+        console.log(result.error);
+      } else {
+        this.setState({
+          books: result
+        });
+      }
+    });
+  }
 
   render() {
     return (
       <div className="app">
-        <Route path="/search" exact component={Findbook} />
-        <Route path="/" exact component={myShelf} />
+        <Route path="/" exact render={() =>
+          <div className="list-books">
+            <div className="list-books-title">
+              <h1>MyReads</h1>
+            </div>
+            <div className="list-books-content">
+              <MyShelf books={this.state.books} updateBook={this.getBooks}/>
+            </div>
+            <div className="open-search">
+              <Link to="/search">Add a book</Link>
+            </div>
+          </div>
+        } />
+
+        <Route path="/search" exact render={() =>
+          <div>
+            <Findbook updateBook={this.getBooks} books={this.state.books} />
+          </div>
+        } />
       </div>
     )
   }
